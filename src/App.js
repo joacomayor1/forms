@@ -62,7 +62,7 @@ function StudentForm() {
           <div className="row mb-3">
             <div className="col-md-5">
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <Form.label>Username</Form.label>
                 <div className="input-group">
                   <div className="input-group-prepend">
                     <span className="input-group-text" id="basic-addon1">
