@@ -1,11 +1,55 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { MdAllInbox } from "react-icons/md";
-import { BiSolidCity,BiSolidSmile } from "react-icons/bi";
+import { BiSolidCity, BiSolidSmile } from "react-icons/bi";
 import { AiFillBank } from "react-icons/ai";
 
 function StudentForm() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [course, setCourse] = useState("");
+  const [gender, setGender] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (username.length < 2) {
+      alert("Username should be at least 2 characters long.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    if (address.length < 10) {
+      alert("Address should be at least 10 characters long.");
+      return;
+    }
+
+    if (!course) {
+      alert("Please select a course.");
+      return;
+    }
+
+    if (!gender) {
+      alert("Please select a gender.");
+      return;
+    }
+
+    console.log("Form submitted:", {
+      username,
+      email,
+      address,
+      course,
+      gender,
+    });
+  };
+
   return (
     <div className="alert alert-success" role="alert">
       <div className="container">
@@ -14,7 +58,7 @@ function StudentForm() {
           <h4>Hello Sutdent! Please fill in your details</h4>
         </div>
         <hr />
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="row mb-3">
             <div className="col-md-5">
               <div className="form-group">
@@ -30,6 +74,9 @@ function StudentForm() {
                     className="form-control"
                     placeholder="Enter Username"
                     aria-label="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -48,6 +95,9 @@ function StudentForm() {
                     type="text"
                     className="form-control"
                     placeholder="Enter Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -59,12 +109,17 @@ function StudentForm() {
                 <label htmlFor="address">Address</label>
                 <div className="input-group">
                   <div className="input-group-prepend">
-                    <span className="input-group-text"><BiSolidCity/></span>
+                    <span className="input-group-text">
+                      <BiSolidCity />
+                    </span>
                   </div>
                   <textarea
                     className="form-control"
                     aria-label="With textarea"
                     placeholder="Street, number, city, zip"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
                   ></textarea>
                 </div>
               </div>
@@ -75,10 +130,15 @@ function StudentForm() {
               <div className="input-group">
                 <div className="input-group-prepend">
                   <label className="input-group-text" htmlFor="course">
-                    <AiFillBank/>
+                    <AiFillBank />
                   </label>
                 </div>
-                <select className="custom-select">
+                <select
+                  className="custom-select"
+                  value={course}
+                  onChange={(e) => setCourse(e.target.value)}
+                  required
+                >
                   <option value="">Select Course</option>
                   <option value="node">Node</option>
                   <option value="react">React</option>
@@ -89,20 +149,43 @@ function StudentForm() {
             <div className="col-md-6">
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <label className="input-group-text"><BiSolidSmile/></label>
+                  <label className="input-group-text">
+                    <BiSolidSmile />
+                  </label>
                 </div>
                 <div
                   className="btn-group btn-group-toggle"
                   data-toggle="buttons"
                 >
                   <label className="btn btn-secondary active">
-                    <input type="radio" value="Female" /> Female
+                    <input
+                      type="radio"
+                      value="Female"
+                      checked={gender === "Female"}
+                      onChange={() => setGender("Female")}
+                      required
+                    />{" "}
+                    Female
                   </label>
                   <label className="btn btn-secondary">
-                    <input type="radio" value="Male" /> Male
+                    <input
+                      type="radio"
+                      value="Male"
+                      checked={gender === "Male"}
+                      onChange={() => setGender("Male")}
+                      required
+                    />{" "}
+                    Male
                   </label>
                   <label className="btn btn-secondary">
-                    <input type="radio" value="Other" /> Other
+                    <input
+                      type="radio"
+                      value="Other"
+                      checked={gender === "Other"}
+                      onChange={() => setGender("Other")}
+                      required
+                    />{" "}
+                    Other
                   </label>
                 </div>
               </div>
